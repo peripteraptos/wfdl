@@ -49,9 +49,10 @@ export async function runWfdl({
   if (!Array.isArray(fontUrls) || fontUrls.length === 0) {
     throw new Error("[wfdl] No font URLs provided.");
   }
-
+  const sourcePath = new URL(".", import.meta.url).pathname;
   const cwd = process.cwd();
   const outAbs = resolve(cwd, outDir);
+  process.chdir(sourcePath);
 
   if (verbose || dryRun) {
     console.log("[wfdl] cwd:", cwd);
@@ -77,6 +78,7 @@ export async function runWfdl({
       outDir: outAbs,
       emptyOutDir: false,
       rollupOptions: {
+        input: new URL("../index.html", import.meta.url).pathname,
         output: {
           assetFileNames: "[name].[ext]",
         },
