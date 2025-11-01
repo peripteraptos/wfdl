@@ -10,6 +10,7 @@ import { runWfdl } from "../src/run-wfdl.js";
  * @property {string|undefined} configFile
  * @property {string[]} subsets
  * @property {boolean|undefined} minifyCss
+ * @property {boolean|undefined} dryRun
  */
 
 /**
@@ -27,6 +28,7 @@ function parseCliArgs(argv) {
     configFile: undefined,
     subsets: [],
     minifyCss: undefined,
+    dryRun: undefined,
   };
 
   for (let i = 0; i < argv.length; i++) {
@@ -91,6 +93,11 @@ function parseCliArgs(argv) {
         break;
       }
 
+      case "--dry-run": {
+        cli.dryRun = true;
+        break;
+      }
+
       case "--verbose":
       case "-v": {
         cli.verbose = true;
@@ -132,6 +139,12 @@ function mergeConfigAndCli({ cfg, cli }) {
         : typeof cfg.minifyCss === "boolean"
           ? cfg.minifyCss
           : undefined,
+    dryRun:
+      typeof cli.dryRun === "boolean"
+        ? cli.dryRun
+        : typeof cfg.dryRun === "boolean"
+          ? cfg.dryRun
+          : false,
   };
 }
 
@@ -145,6 +158,7 @@ Options:
   -s, --subset <name>      Allowed subset (can repeat), e.g. latin,latin-ext
       --minify-css         Force minify CSS
       --no-minify-css      Force no CSS minification
+      --dry-run            Show what would be downloaded/emitted and exit
   -v, --verbose            Verbose output
   -h, --help               Show this help
 
