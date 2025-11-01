@@ -1,6 +1,6 @@
 {
   "name": "wfdl",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tiny CLI around vite-plugin-webfont-dl to download remote webfonts into your project.",
   "type": "module",
   "main": "src/run-wfdl.js",
@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "wfdl": "node bin/wfdl.js"
+    "wfdl": "node bin/wfdl.js",
+    "release": "pnpm dlx bumpp && pnpm publish"
   },
   "author": "peripteraptos <benacke@gmail.com>",
   "license": "MIT",
